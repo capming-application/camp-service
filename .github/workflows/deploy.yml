@@ -68,18 +68,10 @@ jobs:
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
           GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
         run: |
-          echo "GOOGLE_CLIENT_ID prefix: ${GOOGLE_CLIENT_ID:0:4}"
-          echo "GOOGLE_CLIENT_SECRET prefix: ${GOOGLE_CLIENT_SECRET:0:4}"
         
           ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@13.231.23.72 << EOF
-            export GOOGLE_CLIENT_ID='${GOOGLE_CLIENT_ID}'
-            export GOOGLE_CLIENT_SECRET='${GOOGLE_CLIENT_SECRET}'
-        
-            echo 'Inside SSH session...'
-            echo GOOGLE_CLIENT_ID prefix: \${GOOGLE_CLIENT_ID:0:4}
-            echo GOOGLE_CLIENT_SECRET prefix: \${GOOGLE_CLIENT_SECRET:0:4}
-        
             set -x
+            aws ecr get-login-password --region ap-northeast-1 | docker login --username AWS --password-stdin 319805118398.dkr.ecr.ap-northeast-1.amazonaws.com
             docker stop camp-service || true
             docker rm camp-service || true
             docker rmi -f 319805118398.dkr.ecr.ap-northeast-1.amazonaws.com/camping-camp-repo:latest || true
@@ -87,8 +79,6 @@ jobs:
             docker run -d \
               --name camp-service \
               -p 8080:8080 \
-              -e GOOGLE_CLIENT_ID=\${GOOGLE_CLIENT_ID} \
-              -e GOOGLE_CLIENT_SECRET=\${GOOGLE_CLIENT_SECRET} \
               319805118398.dkr.ecr.ap-northeast-1.amazonaws.com/camping-camp-repo:latest
           EOF
 
