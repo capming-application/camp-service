@@ -15,8 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CampController {
 
-    @Autowired
-    private CampService campService;
+    private final CampService campService;
 
     @GetMapping("/test")
     public ResponseEntity<List<Camp>> getCamps() {

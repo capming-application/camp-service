@@ -45,8 +45,8 @@ jobs:
       - name: Push Docker image to ECR
         run: |
           aws ecr get-login-password --region ap-northeast-1 | docker login --username AWS --password-stdin 319805118398.dkr.ecr.ap-northeast-1.amazonaws.com
-          docker tag camp-service 319805118398.dkr.ecr.ap-northeast-1.amazonaws.com/camping-user-repo:latest
-          docker push 319805118398.dkr.ecr.ap-northeast-1.amazonaws.com/camping-user-repo:latest
+          docker tag camp-service 319805118398.dkr.ecr.ap-northeast-1.amazonaws.com/camping-camp-repo:latest
+          docker push 319805118398.dkr.ecr.ap-northeast-1.amazonaws.com/camping-camp-repo:latest
 
       # ----------------------------------------
       # 6. Create the private key file for SSH
@@ -82,14 +82,14 @@ jobs:
             set -x
             docker stop camp-service || true
             docker rm camp-service || true
-            docker rmi -f 319805118398.dkr.ecr.ap-northeast-1.amazonaws.com/camping-user-repo:latest || true
-            docker pull 319805118398.dkr.ecr.ap-northeast-1.amazonaws.com/camping-user-repo:latest
+            docker rmi -f 319805118398.dkr.ecr.ap-northeast-1.amazonaws.com/camping-camp-repo:latest || true
+            docker pull 319805118398.dkr.ecr.ap-northeast-1.amazonaws.com/camping-camp-repo:latest
             docker run -d \
               --name camp-service \
               -p 8080:8080 \
               -e GOOGLE_CLIENT_ID=\${GOOGLE_CLIENT_ID} \
               -e GOOGLE_CLIENT_SECRET=\${GOOGLE_CLIENT_SECRET} \
-              319805118398.dkr.ecr.ap-northeast-1.amazonaws.com/camping-user-repo:latest
+              319805118398.dkr.ecr.ap-northeast-1.amazonaws.com/camping-camp-repo:latest
           EOF
 
       # ----------------------------------------

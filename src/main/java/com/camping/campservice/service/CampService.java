@@ -12,8 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CampService {
 
-    @Autowired
-    private CampRepository campRepository;
+    private final CampRepository campRepository;
 
     public List<Camp> getCamps() {
         return campRepository.findAll();
