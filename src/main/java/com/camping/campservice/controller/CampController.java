@@ -21,14 +21,8 @@ public class CampController {
     private final CampService campService;
     private final javax.sql.DataSource dataSource;
 
-    @GetMapping("/test")
+    @GetMapping
     public ResponseEntity<List<Camp>> getCamps() {
-        HikariDataSource hikariDataSource = (HikariDataSource) dataSource;
-        System.out.println("Max Pool Size: " + hikariDataSource.getMaximumPoolSize());
-        System.out.println("Active Connections: " + hikariDataSource.getHikariPoolMXBean().getActiveConnections());
-        System.out.println("Idle Connections: " + hikariDataSource.getHikariPoolMXBean().getIdleConnections());
-
-
         return ResponseEntity.ok().body(this.campService.getCamps());
     }
 
