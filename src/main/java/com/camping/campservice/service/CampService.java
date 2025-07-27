@@ -1,6 +1,8 @@
 package com.camping.campservice.service;
 
+import com.camping.campservice.dto.camp.CreateRqDto;
 import com.camping.campservice.entity.Camp;
+import com.camping.campservice.mapper.CampMapper;
 import com.camping.campservice.repository.CampRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,4 +19,11 @@ public class CampService {
     public List<Camp> getCamps() {
         return campRepository.findAll();
     }
+
+    public void createCamp(CreateRqDto createrqDto) {
+        List<Camp> camps = CampMapper.INSTANCE.dtoListToEntityList(createrqDto.campDtoList());
+        this.campRepository.saveAll(camps);
+    }
+
+
 }

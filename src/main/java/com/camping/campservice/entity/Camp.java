@@ -1,10 +1,11 @@
 package com.camping.campservice.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 
 @Entity
-@Getter
+@Data
 @Table(name = "camp")
 public class Camp {
 
