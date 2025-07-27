@@ -13,7 +13,7 @@ public interface CampMapper {
 
     CampMapper INSTANCE = Mappers.getMapper(CampMapper.class);
 
-    @Mapping(target = "id", ignore = true)
+//    @Mapping(target = "id", ignore = true)
     Camp dtoToEntity(CampDto campDto);
 
     List<Camp> dtoListToEntityList(List<CampDto> campDtoList);
